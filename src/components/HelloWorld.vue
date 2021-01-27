@@ -17,21 +17,29 @@ export default {
     }
   },
   methods : {
-    fetch_flight_data :async  function  () {
-      const Flight = Parse.Object.extend('Flight');
-      const flight = new Parse.Query(Flight);
+    fetch_flight_data :  async function() {
+      const Flight = Parse.Object.extend('SoccerPlayers');
+      const User = Parse.Object.extend('User');
+      const query = new Parse.Query(Flight);
+      const userQuery = new Parse.Query(User);
+      
+      //console.log(query)
 
-       console.log(flight)
-       
-      // flight.get("Lb9g8GHEQy")
-      // .then((result) => {
-      // console.log(result)
-      // }, (error) => {
-      //   console.log(error)
-      // });
-      flight.equalTo("nightTime",0)
-      const results = await flight.find();
-      console.log(results)
+       //fetching soccerPlayers object
+      query.get("CqcAONMbkH")
+      .then((result) => {
+      console.log(result)
+      }, (error ) => {
+        if(error.code === Parse.Error.OBJECT_NOT_FOUND)
+        console.log('not found')
+      });
+      
+      //fetching user data
+      // query.equalTo("lastName",'ffecf382-7950-49cf-8e01-445ab6c1f5ec')
+      userQuery.limit(10);
+     const results = await userQuery.find({ useAppId: true });
+     console.log(results)
+     
 
     }
   },
